@@ -3,7 +3,7 @@ Gem::Specification.new do |spec|
   spec.name          = "crystalmq"
   spec.version       = "0.0.1"
   spec.authors       = ["Martin Simpson"]
-  spec.email         = ["martin.c.simpson@gmail.com"]
+  spec.email         = ["martin.simpson@crystalmq.io"]
 
   spec.summary       = "Crystal Message Queue Ruby Client"
   spec.description   = "A Client for the Crystal Message Queue written in Ruby"
