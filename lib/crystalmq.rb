@@ -38,10 +38,18 @@ class CrystalMQ
     end
         
     def initialize(host, topic, channel)
-      @socket = TCPSocket.new(host, 1235)
-      @socket.sync = true
       @topic = topic
       @channel = channel
+      @host = host
+      connect_socket
+    rescue SocketError
+      connect_socket
+      retry
+    end
+    
+    def connect_socket
+      @socket = TCPSocket.new(@host, 1235)
+      @socket.sync = true
     end
     
     def consume
@@ -54,6 +62,9 @@ class CrystalMQ
         yield message.message
       end
       @socket.close
+    rescue SocketError
+      connect_socket
+      retry
     end
   end
   
@@ -79,13 +90,24 @@ class CrystalMQ
     end
     
     def initialize(host, topic)
-      @socket = TCPSocket.new(host, 1234)
-      @socket.sync = true
+      @host = host
       @topic = topic
+      connect_socket
+    rescue SocketError
+      connect_socket
+      retry
     end
   
+    def connect_socket
+      @socket = TCPSocket.new(@host, 1234)
+      @socket.sync = true
+    end
+    
     def write(message)
       @socket.write(ProducerPayload.new(@topic, message).to_msgpack)
+    rescue SocketError
+      connect_socket
+      retry
     end
     
     def terminate

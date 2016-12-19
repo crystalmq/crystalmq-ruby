@@ -1,7 +1,7 @@
 # coding: utf-8
 Gem::Specification.new do |spec|
   spec.name          = "crystalmq"
-  spec.version       = "0.0.1"
+  spec.version       = "0.0.4"
   spec.authors       = ["Martin Simpson"]
   spec.email         = ["martin.simpson@crystalmq.io"]
 
